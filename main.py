@@ -115,20 +115,16 @@ def train_bert(df, mapping, model_name="distilbert-base-uncased", output_dir="be
     )
 
     args = TrainingArguments(
-        output_dir=output_dir,
-        evaluation_strategy="epoch",
-        save_strategy="epoch",
-        learning_rate=2e-5,
-        per_device_train_batch_size=batch_size,
-        per_device_eval_batch_size=batch_size,
-        num_train_epochs=epochs,
-        weight_decay=0.01,
-        load_best_model_at_end=True,
-        seed=RANDOM_SEED,
-        logging_steps=50,
-        metric_for_best_model="accuracy", # Explicitly set metric
+    output_dir=output_dir,
+    learning_rate=2e-5,
+    per_device_train_batch_size=batch_size,
+    per_device_eval_batch_size=batch_size,
+    num_train_epochs=epochs,
+    weight_decay=0.01,
+    seed=RANDOM_SEED,
+    logging_steps=50,
     )
-
+    
     data_collator = DataCollatorWithPadding(tokenizer)
     
     def compute_metrics(p):
