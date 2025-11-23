@@ -1,0 +1,17 @@
+# Python virtual environment
+mp_env/
+
+# Byte-compiled / cache files
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Logs and temporary files
+*.log
+.DS_Store
+
+# Model files and checkpoints
+*.joblib
+*.pt
+*.bin
+bert_model/

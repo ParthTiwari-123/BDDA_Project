@@ -57,7 +57,6 @@ def train_tfidf(df, mapping, save_path="tfidf_model.joblib"):
     
     print("Training TF-IDF + Logistic Regression model...")
     pipeline.fit(X_train, y_train)
-    
     preds = pipeline.predict(X_test)
     print("\n--- TF-IDF Model Report ---")
     print(classification_report(y_test, preds))
@@ -113,7 +112,6 @@ def train_bert(df, mapping, model_name="distilbert-base-uncased", output_dir="be
         id2label=id2label,  # Save mapping
         label2id=label2id   # Save mapping
     )
-
     args = TrainingArguments(
     output_dir=output_dir,
     learning_rate=2e-5,
@@ -124,9 +122,7 @@ def train_bert(df, mapping, model_name="distilbert-base-uncased", output_dir="be
     seed=RANDOM_SEED,
     logging_steps=50,
     )
-    
     data_collator = DataCollatorWithPadding(tokenizer)
-    
     def compute_metrics(p):
         preds = p.predictions.argmax(-1)
         return {"accuracy": (preds == p.label_ids).mean()}
@@ -140,14 +136,11 @@ def train_bert(df, mapping, model_name="distilbert-base-uncased", output_dir="be
         data_collator=data_collator,
         compute_metrics=compute_metrics
     )
-
     print("\n--- Training BERT model --- (GPU recommended)")
     trainer.train()
-    
     print("\n--- BERT Model Evaluation ---")
     metrics = trainer.evaluate()
     print(metrics)
-    
     trainer.save_model(output_dir)
     print(f"Model saved to {output_dir}")
 
